@@ -81,7 +81,6 @@ def get_speech_timestamps(
     audio_length_samples = len(audio)
 
     model = get_vad_model()
-    model = model.to('cuda')
 
     padded_audio = np.pad(
         audio, (0, window_size_samples - audio.shape[0] % window_size_samples)
