@@ -85,9 +85,11 @@ def get_speech_timestamps(
     padded_audio = np.pad(
         audio, (0, window_size_samples - audio.shape[0] % window_size_samples)
     )
-    print(padded_audio.reshape(1, -1))  # debug
-    speech_probs = model(padded_audio.reshape(1, -1)).squeeze(0)
-    print(speech_probs)  # debug
+    # debug
+    # speech_probs = model(padded_audio.reshape(1, -1)).squeeze(0)
+    a = padded_audio.reshape(1, -1)
+    b = model(a)
+    speech_probs = b.squeeze(0)
 
     triggered = False
     speeches = []
