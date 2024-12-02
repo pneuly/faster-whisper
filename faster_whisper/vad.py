@@ -90,7 +90,12 @@ def get_speech_timestamps(
     
     #a = padded_audio.reshape(1, -1)
     a = np.ascontiguousarray(padded_audio.reshape(1, -1))
+    print(f"is a c-contiguous?: {a.flags['C_CONTIGUOUS']}")
+    print(f"is a f-contiguous?: {a.flags['F_CONTIGUOUS']}")
     b = model(a)
+
+    print(f"id a: {id(a)}  id b: {id(b)}") 
+    
     speech_probs = b.squeeze(0)
 
     triggered = False
