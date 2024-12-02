@@ -87,7 +87,8 @@ def get_speech_timestamps(
     )
     # debug
     # speech_probs = model(padded_audio.reshape(1, -1)).squeeze(0)
-    a = np.ascontiguousarray(padded_audio.reshape(1, -1))
+    #a = np.ascontiguousarray(padded_audio.reshape(1, -1))
+    a = padded_audio.reshape(1, -1)
     b = model(a)
     speech_probs = b.squeeze(0)
 
