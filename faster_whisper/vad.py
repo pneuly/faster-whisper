@@ -88,43 +88,7 @@ def get_speech_timestamps(
     # debug
     # speech_probs = model(padded_audio.reshape(1, -1)).squeeze(0)
     a = padded_audio.reshape(1, -1)
-    #b = model(a)
-
-
-    num_samples: int = 512
-    context_size_samples: int = 64
-    batch_size = a.shape[0]
-
-    state = np.zeros((2, batch_size, 128), dtype="float32")
-    context = np.zeros(
-        (batch_size, context_size_samples),
-        dtype="float32",
-    )
-
-    batched_audio = a.reshape(batch_size, -1, num_samples)
-    context = batched_audio[..., -context_size_samples:]
-    context[:, -1] = 0
-    context = np.roll(context, 1, 1)
-    batched_audio = np.concatenate([context, batched_audio], 2)
-
-    batched_audio = batched_audio.reshape(-1, num_samples + context_size_samples)
-
-    encoder_output = get_vad_model().encoder_session.run(None, {"input": batched_audio})[0]
-    encoder_output = encoder_output.reshape(batch_size, -1, 128)
-
-    decoder_outputs = []
-    for window in np.split(encoder_output, encoder_output.shape[1], axis=1):
-        out, state = get_vad_model().decoder_session.run(
-            None, {"input": window.squeeze(1), "state": state}
-        )
-        decoder_outputs.append(out)
-
-    out = np.stack(decoder_outputs, axis=1).squeeze(-1)
-    b = out
-
-
-    
-    
+    b = model(a)
     speech_probs = b.squeeze(0)
 
     triggered = False
