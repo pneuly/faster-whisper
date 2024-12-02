@@ -91,7 +91,8 @@ def get_speech_timestamps(
     #b = model(a)
 
 
-    
+    num_samples: int = 512
+    context_size_samples: int = 64
     batch_size = a.shape[0]
 
     state = np.zeros((2, batch_size, 128), dtype="float32")
