@@ -120,7 +120,7 @@ def get_speech_timestamps(
         decoder_outputs.append(out)
 
     out = np.stack(decoder_outputs, axis=1).squeeze(-1)
-    a = out
+    b = out
 
 
     
