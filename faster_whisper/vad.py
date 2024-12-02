@@ -109,12 +109,12 @@ def get_speech_timestamps(
 
     batched_audio = batched_audio.reshape(-1, num_samples + context_size_samples)
 
-    encoder_output = get_vad_model.encoder_session.run(None, {"input": batched_audio})[0]
+    encoder_output = get_vad_model().encoder_session.run(None, {"input": batched_audio})[0]
     encoder_output = encoder_output.reshape(batch_size, -1, 128)
 
     decoder_outputs = []
     for window in np.split(encoder_output, encoder_output.shape[1], axis=1):
-        out, state = get_vad_model.decoder_session.run(
+        out, state = get_vad_model().decoder_session.run(
             None, {"input": window.squeeze(1), "state": state}
         )
         decoder_outputs.append(out)
