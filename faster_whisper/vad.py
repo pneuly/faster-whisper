@@ -1,6 +1,7 @@
 import bisect
 import functools
 import os
+from memory_profiler import profile
 
 from dataclasses import dataclass
 from typing import Dict, List, Optional, Tuple
@@ -41,7 +42,7 @@ class VadOptions:
     min_silence_duration_ms: int = 2000
     speech_pad_ms: int = 400
 
-
+@profile
 def get_speech_timestamps(
     audio: np.ndarray,
     vad_options: Optional[VadOptions] = None,
@@ -87,15 +88,15 @@ def get_speech_timestamps(
     )
     # debug
     # speech_probs = model(padded_audio.reshape(1, -1)).squeeze(0)
-    
+
     #a = padded_audio.reshape(1, -1)
     a = np.ascontiguousarray(padded_audio.reshape(1, -1))
     print(f"is a c-contiguous?: {a.flags['C_CONTIGUOUS']}")
     print(f"is a f-contiguous?: {a.flags['F_CONTIGUOUS']}")
     b = model(a)
 
-    print(f"id a: {id(a)}  id b: {id(b)}") 
-    
+    print(f"id a: {id(a)}  id b: {id(b)}")
+
     speech_probs = b.squeeze(0)
 
     triggered = False
