@@ -14,8 +14,8 @@ from typing import BinaryIO, Union
 
 import av
 import numpy as np
-
-
+from memory_profiler import profile
+@profile
 def decode_audio(
     input_file: Union[str, BinaryIO],
     sampling_rate: int = 16000,
