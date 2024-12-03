@@ -287,6 +287,7 @@ class SileroVADModel:
             sess_options=opts,
         )
 
+    @profile
     def __call__(
         self, audio: np.ndarray, num_samples: int = 512, context_size_samples: int = 64
     ):
